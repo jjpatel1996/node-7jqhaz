@@ -1,3 +1,5 @@
 {
-  "MONGO_HOST": ""
+  "MONGO_HOST": "mongodb+srv://jaypatel:LAlqgx8ecjrgFKXX@jay-cluster.fayoxcl.mongodb.net/?retryWrites=true&w=majority",
+  "DATABASE": "interview",
+  "PORT": 3000
 }

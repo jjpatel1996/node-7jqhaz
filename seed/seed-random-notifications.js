@@ -1,10 +1,9 @@
 'use strict';
 
-const config = require("config");
-const { MongoClient } = require('mongodb');
+const { getInstance } = require('../mongo');
+const { _randomItemFromArray } = require('./utils')
 
-const MONGO_HOST = config.get('MONGO_HOST');
-
+const CollectionName = "notifications"
 const randomNames = [
     'Priyanka',
     'David',
@@ -15,6 +14,7 @@ const randomNames = [
     'Adeel',
     'Nour',
 ];
+
 const randomNotificationText = [
     (name) =>
         `To suppose justice to do this, is to destroy the principle of its existence, which is the thing itself, ${name}.`,
@@ -33,26 +33,21 @@ const randomNotificationText = [
 ];
 
 async function seed() {
-    const client = new MongoClient(MONGO_HOST);
-    await client.connect();
+    const db = await getInstance();
+    await db.collection(CollectionName).drop();
     for (let seedCount = 0; seedCount < 20; seedCount++) {
         try {
             const name = _randomItemFromArray(randomNames);
             const message = _randomItemFromArray(randomNotificationText)(name);
-            await client.db('interview').collection("notifications").insertOne({ message, read: false })
+            await db.collection(CollectionName).insertOne({ message, read: false })
             console.log(`${seedCount}: Inserting ${message}`);
         } catch (error) {
             console.log('Unable to create a random notification.', error);
         }
-
     }
-}
-
-function _randomItemFromArray(array) {
-    return array[Math.floor(Math.random() * array.length)];
 }
 
 seed().then(() => {
     console.log('Finished seeding notifications in the database');
     process.exit(0);
-});
+}).catch((error) => console.error(error));

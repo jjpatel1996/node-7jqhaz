@@ -11,7 +11,7 @@
     "http"
   ],
   "paths": {
-    "/api/notifications": {
+    "/api/notifications/": {
       "get": {
         "description": "",
         "parameters": [],
@@ -39,7 +39,7 @@
         }
       }
     },
-    "/api/notifications/unread/count": {
+    "/api/notifications/count": {
       "get": {
         "description": "",
         "parameters": [],
@@ -57,6 +57,46 @@
       "put": {
         "description": "",
         "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/notifications/{_id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "_id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
